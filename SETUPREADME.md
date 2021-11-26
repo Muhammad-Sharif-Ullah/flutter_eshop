@@ -23,7 +23,7 @@ A new Flutter project.
    Command: touch theme\app_theme.dart theme\app_colors.dart theme\app_constant.dart theme\app_string.dart
    1.6 Now create some dart files in routes Directory
    [route_string.dart app_route.dar]
-   Command: touch routes\route_string.dart routes\app_route.dart
+   Command: touch routes\app_pages.dart routes\app_routes.dart
 
 2. Add Git
     a. Go to project root directory
@@ -31,4 +31,4 @@ A new Flutter project.
         Command: git init 
         Command: git add .
         Command: git commit -m "Adding all necessary files and Directory in the project"
-        
+
