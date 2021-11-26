@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_eshop/theme/app_colors.dart';
+import 'package:flutter_eshop/theme/app_text_style.dart';
 
-class AppTheme{
-  static final lightTheme = ThemeData.light().copyWith(
+class AppTheme {
+  static final lightTheme = ThemeData(
     primaryColor: AppColors.primary,
+    colorScheme: const ColorScheme.light(),
     scaffoldBackgroundColor: AppColors.backgroundLight,
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
@@ -16,31 +18,14 @@ class AppTheme{
       elevation: 0,
     ),
     textTheme: const TextTheme(
-      headline1: TextStyle(
-          color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
-      headline2: TextStyle(
-          color: Colors.black, fontSize: 24, fontWeight: FontWeight.w600),
-      headline3: TextStyle(
-          color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
-      caption: TextStyle(
-        color: Colors.black,
-        fontSize: 14,
-        letterSpacing: -.15,
-        fontWeight: FontWeight.w600,
-      ),
-      bodyText1: TextStyle(
-        color: Colors.black,
-        fontSize: 11,
-      ),
-      bodyText2: TextStyle(
-          color: Colors.black,
-          fontSize: 14,
-          letterSpacing: 2,
-          wordSpacing: 2,
-          fontWeight: FontWeight.w400),
-      subtitle1: TextStyle(
-          color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
-      subtitle2: TextStyle(color: Colors.black, fontSize: 16),
+      
+      headline1: AppTextStyle.headline1,
+      headline2: AppTextStyle.headline2,
+      headline3: AppTextStyle.headline3,
+      caption: AppTextStyle.caption,
+      bodyText1: AppTextStyle.bodyText1,
+      bodyText2: AppTextStyle.bodyText2,
+      subtitle1: AppTextStyle.subtitle1,
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       selectedItemColor: AppColors.primary,
@@ -53,11 +38,13 @@ class AppTheme{
       backgroundColor: AppColors.white,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(primary: AppColors.primary)),
+      style: ElevatedButton.styleFrom(primary: AppColors.primary),
+    ),
   );
 
-  static final darkTheme = ThemeData.dark().copyWith(
+  static final darkTheme = ThemeData(
     primaryColor: AppColors.primary,
+    colorScheme: const ColorScheme.dark(),
     scaffoldBackgroundColor: AppColors.backgroundDark,
     appBarTheme: const AppBarTheme(
       iconTheme: IconThemeData(color: Colors.white),
@@ -70,30 +57,13 @@ class AppTheme{
       ),
     ),
     textTheme: const TextTheme(
-      headline1: TextStyle(
-          color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
-      headline2: TextStyle(
-          color: Colors.white, fontSize: 24, fontWeight: FontWeight.w600),
-      headline3: TextStyle(
-          color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
-      caption: TextStyle(
-          color: Colors.white,
-          fontSize: 14,
-          letterSpacing: -.15,
-          fontWeight: FontWeight.w600),
-      bodyText1: TextStyle(
-        color: Colors.white,
-        fontSize: 11,
-      ),
-      bodyText2: TextStyle(
-          color: Colors.white,
-          fontSize: 14,
-          letterSpacing: 2,
-          wordSpacing: 2,
-          fontWeight: FontWeight.w400),
-      subtitle1: TextStyle(
-          color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
-      subtitle2: TextStyle(color: Colors.white, fontSize: 16),
+      headline1: AppTextStyle.headline1,
+      headline2: AppTextStyle.headline2,
+      headline3: AppTextStyle.headline3,
+      caption: AppTextStyle.caption,
+      bodyText1: AppTextStyle.bodyText1,
+      bodyText2: AppTextStyle.bodyText2,
+      subtitle1: AppTextStyle.subtitle1,
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         selectedItemColor: AppColors.primary,
@@ -101,11 +71,9 @@ class AppTheme{
         type: BottomNavigationBarType.fixed,
         backgroundColor: AppColors.backgroundDark),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor:  AppColors.blackDark,
+      backgroundColor: AppColors.blackDark,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(primary: AppColors.primary)),
   );
 }
-
-
