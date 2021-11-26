@@ -19,8 +19,8 @@ A new Flutter project.
    [pages, widget, utils, repository, routes, theme]
    Command: mkdir pages widget utils repository routes
    1.5 Now create some dart files in theme Directory
-   [app_theme.dart, app_colors.dart, app_constant.dart, app_string.dart]
-   Command: touch theme\app_theme.dart theme\app_colors.dart theme\app_constant.dart theme\app_string.dart
+   [app_theme.dart, app_colors.dart, app_constant.dart, app_string.dart, app_text_style.dart]
+   Command: touch theme\app_theme.dart theme\app_colors.dart theme\app_constant.dart theme\app_string.dart theme\app_text_style.dart
    1.6 Now create some dart files in routes Directory
    [route_string.dart app_route.dar]
    Command: touch routes\app_pages.dart routes\app_routes.dart
