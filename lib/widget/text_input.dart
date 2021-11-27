@@ -1,10 +1,12 @@
-
-
 import 'package:flutter/material.dart';
 
 class TextInputField extends StatelessWidget {
   const TextInputField({
-    Key? key, required this.label, required this.hintText, required this.controller, required this.inputType,
+    Key? key,
+    required this.label,
+    required this.hintText,
+    required this.controller,
+    required this.inputType,
     required this.validator,
   }) : super(key: key);
 
@@ -20,15 +22,15 @@ class TextInputField extends StatelessWidget {
       validator: validator,
       keyboardType: inputType,
       decoration: InputDecoration(
-          border: InputBorder.none,
-          labelText: label,
-          labelStyle: TextStyle(color: Colors.grey),
-          hintText: hintText,
+        border: InputBorder.none,
+        labelText: label,
+        labelStyle: const TextStyle(color: Colors.grey),
+        hintText: hintText,
       ),
     );
   }
 
-  String? name(va){
-      return null;
-    }
+  String? name(va) {
+    return null;
+  }
 }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_eshop/routes/app_pages.dart';
 import 'package:flutter_eshop/theme/app_constant.dart';
 import 'package:flutter_eshop/utils/validator.dart';
+import 'package:flutter_eshop/widget/big_splash_button.dart';
 import 'package:flutter_eshop/widget/facebook_auth_btn.dart';
 import 'package:flutter_eshop/widget/google_auth_btn.dart';
 import 'package:flutter_eshop/widget/input_container_widget.dart';
 import 'package:flutter_eshop/widget/password_field.dart';
-import 'package:flutter_eshop/widget/textInput.dart';
+import 'package:flutter_eshop/widget/text_input.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -24,7 +26,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    // final double width = size.width;
+    final double width = size.width;
     final double height = size.height;
     final TextTheme textTheme = Theme.of(context).textTheme;
     return WillPopScope(
@@ -83,20 +85,20 @@ class _LoginViewState extends State<LoginView> {
                           child: TextButton(
                             child: Text("Forgot Password",
                                 style: textTheme.subtitle1),
-                            // onPressed: () => Get.to(() => ForgotPassView()),
-                            onPressed: () {},
+                            onPressed: () => Navigator.pushNamed(
+                                context, AppRoutes.forgotPassword),
                           ),
                         ),
 
                         const SizedBox(height: 32),
-                        // buildLoginButton(context),
+                        buildLoginButton(context, width),
                         // const SizedBox(height: 16),
                         Center(
                           child: TextButton(
                             child: Text("Don't have a account?",
                                 style: textTheme.subtitle1),
-                            // onPressed: () => Get.to(() => SignUpView()),
-                            onPressed: () {},
+                            onPressed: () =>
+                                Navigator.pushNamed(context, AppRoutes.signup),
                           ),
                         ),
                       ],
@@ -133,6 +135,15 @@ class _LoginViewState extends State<LoginView> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildLoginButton(BuildContext context, double width) {
+    return BigSplashButton(
+      width: width,
+      height: 48,
+      text: "Login",
+      onPressed: () async {},
     );
   }
 }

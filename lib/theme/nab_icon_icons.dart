@@ -6,10 +6,10 @@
 /// following in your pubspec.yaml
 ///
 /// flutter:
-///   fonts:
-///    - family:  NabIcon
-///      fonts:
-///       - asset: fonts/NabIcon.ttf
+  //  fonts:
+  //   - family:  NabIcon
+  //     fonts:
+  //      - asset: fonts/NabIcon.ttf
 ///
 /// 
 ///
