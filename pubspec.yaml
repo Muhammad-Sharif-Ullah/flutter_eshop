@@ -31,6 +31,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  intl: ^0.17.0
   provider: ^6.0.1
 
 dev_dependencies:
@@ -71,7 +72,7 @@ flutter:
     - family: Metropolis-Regular
       fonts:
         - asset: assets/fonts/Metropolis-Regular.otf
-    - family:  NabIcon
+    - family: NabIcon
       fonts:
         - asset: assets/fonts/NabIcon.ttf
   #   - family: Trajan Pro

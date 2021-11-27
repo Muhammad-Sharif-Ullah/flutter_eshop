@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_eshop/theme/app_colors.dart';
 import 'package:flutter_eshop/widget/favorite_button.dart';
 import 'package:flutter_eshop/widget/price_text_widget.dart';
-import 'package:flutter_eshop/widget/ratingWidget.dart';
+import 'package:flutter_eshop/widget/rating_widget.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({

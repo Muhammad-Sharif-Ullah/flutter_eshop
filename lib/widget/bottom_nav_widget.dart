@@ -12,7 +12,7 @@ class CustomBottomNavigator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
+    // final TextTheme textTheme = Theme.of(context).textTheme;
     final bool isDarkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
 

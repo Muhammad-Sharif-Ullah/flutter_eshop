@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_eshop/theme/app_colors.dart';
+import 'package:flutter_eshop/routes/app_pages.dart';
 import 'package:flutter_eshop/theme/app_constant.dart';
 import 'package:flutter_eshop/widget/bottom_nav_widget.dart';
 
@@ -14,24 +14,27 @@ class ProfleView extends StatelessWidget {
 
     //   body: SafeArea(child: Center(child: Text("Profle View"))),
     // );
-    final Size size = MediaQuery.of(context).size;
-    final double width = size.width;
-    final double height = size.height;
+    // final Size size = MediaQuery.of(context).size;
+    // final double width = size.width;
+    // final double height = size.height;
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final bool isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
+    // final bool isDarkMode =
+    //     MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return Scaffold(
-      appBar: AppBar(),
+      // appBar: AppBar(),
       extendBody: true,
       bottomNavigationBar: const CustomBottomNavigator(),
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.all(AppConstant.kPadding),
+          padding: const EdgeInsets.symmetric(horizontal: AppConstant.kPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                height: MediaQuery.of(context).padding.top + 10,
+              ),
               Text(
                 'My Profile',
                 style: textTheme.headline1,
@@ -110,8 +113,8 @@ class ProfleView extends StatelessWidget {
                 context,
                 title: 'Settings',
                 text: 'Notification and Password',
-                // onTap: () => Get.to(() => SettingsView()),
-                onTap: () {},
+                onTap: () => Navigator.pushNamed(context, AppRoutes.settings),
+                // onTap: () {},
               ),
               // onTap: () async {
               //   await FireBaseAuth.logOut();

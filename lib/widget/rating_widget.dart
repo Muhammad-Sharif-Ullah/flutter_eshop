@@ -6,15 +6,15 @@ class RatingWidget extends StatelessWidget {
   final int peopleCount;
   @override
   Widget build(BuildContext context) {
-    final String rate = "★";
-    final String notRated = "☆";
+    const String rate = "★";
+    const String notRated = "☆";
     return Text.rich(
       TextSpan(
-        style: TextStyle(fontSize: 14, color: Colors.grey),
+        style: const TextStyle(fontSize: 14, color: Colors.grey),
         children: [
           TextSpan(
-              text: '${rate * rated}',
-              style: TextStyle(color: Color(0xFFFFBA49), fontSize: 16)),
+              text:  '${rate * rated}',
+              style: const TextStyle(color: Color(0xFFFFBA49), fontSize: 16)),
           TextSpan(text: '${notRated * (5 - rated)}'),
           if(peopleCount!=0)
           TextSpan(text: ' ($peopleCount)'),

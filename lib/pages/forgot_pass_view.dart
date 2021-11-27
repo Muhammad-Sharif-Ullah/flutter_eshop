@@ -21,10 +21,10 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final double width = size.width;
-    final double height = size.height;
+    // final double height = size.height;
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final bool isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
+    // final bool isDarkMode =
+    //     MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     Widget requestToResetPass() {
       return BigSplashButton(
