@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_eshop/theme/app_colors.dart';
 import 'package:flutter_eshop/theme/app_constant.dart';
 import 'package:flutter_eshop/utils/validator.dart';
 import 'package:flutter_eshop/widget/big_splash_button.dart';
 import 'package:flutter_eshop/widget/input_container_widget.dart';
 import 'package:flutter_eshop/widget/text_input.dart';
 
-class ForgotPassView extends StatefulWidget {
-  const ForgotPassView({Key? key}) : super(key: key);
+class ForgotPassPage extends StatefulWidget {
+  const ForgotPassPage({Key? key}) : super(key: key);
 
   @override
-  State<ForgotPassView> createState() => _ForgotPassViewState();
+  State<ForgotPassPage> createState() => _ForgotPassPageState();
 }
 
-class _ForgotPassViewState extends State<ForgotPassView> {
+class _ForgotPassPageState extends State<ForgotPassPage> {
   final TextEditingController _email = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

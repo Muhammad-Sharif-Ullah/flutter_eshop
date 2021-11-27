@@ -1,7 +1,7 @@
 import 'package:flutter_eshop/pages/forgot_pass_view.dart';
-import 'package:flutter_eshop/pages/home.dart';
-import 'package:flutter_eshop/pages/login.dart';
-import 'package:flutter_eshop/pages/signup_view.dart';
+import 'package:flutter_eshop/pages/home_page.dart';
+import 'package:flutter_eshop/pages/login_page.dart';
+import 'package:flutter_eshop/pages/signup_page.dart';
 
 part 'app_routes.dart';
 
@@ -9,9 +9,9 @@ class AppPages {
   AppPages._();
   static const String initalRoutes = AppRoutes.home;
   static final routes = {
-    AppRoutes.home: (context) => const Home(),
-    AppRoutes.login: (context) => const LoginView(),
-    AppRoutes.signup: (context) => const SignUpView(),
-    AppRoutes.forgotPassword: (context) => const ForgotPassView(),
+    AppRoutes.home: (context) => const HomePage(),
+    AppRoutes.login: (context) => const LoginPage(),
+    AppRoutes.signup: (context) => const SignUpPage(),
+    AppRoutes.forgotPassword: (context) => const ForgotPassPage(),
   };
 }

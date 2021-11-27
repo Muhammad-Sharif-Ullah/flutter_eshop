@@ -9,14 +9,14 @@ import 'package:flutter_eshop/widget/input_container_widget.dart';
 import 'package:flutter_eshop/widget/password_field.dart';
 import 'package:flutter_eshop/widget/text_input.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _email = TextEditingController();
 
   final TextEditingController _password = TextEditingController();

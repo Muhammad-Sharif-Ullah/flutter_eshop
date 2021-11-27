@@ -3,17 +3,17 @@ import 'package:flutter_eshop/data/slider_data.dart';
 import 'package:flutter_eshop/widget/bottom_nav_widget.dart';
 import 'package:flutter_eshop/widget/carousel_widget.dart';
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+class HomeView extends StatelessWidget {
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
     final double height = size.height;
 
     return Scaffold(
       extendBody: true,
+      bottomNavigationBar: const CustomBottomNavigator(),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -55,9 +55,6 @@ class Home extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: const CustomBottomNavigator(
-        index: 0,
       ),
     );
   }
