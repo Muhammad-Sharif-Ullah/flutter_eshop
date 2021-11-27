@@ -4,12 +4,15 @@ import 'package:flutter_eshop/widget/favorite_button.dart';
 import 'package:flutter_eshop/widget/price_text_widget.dart';
 import 'package:flutter_eshop/widget/rating_widget.dart';
 
-class ProductCard extends StatelessWidget {
-  const ProductCard({
-    required this.index,
+class HomeItemCard extends StatelessWidget {
+  const HomeItemCard({
     Key? key,
+    required this.isDarkMode,
+    required this.textTheme,
   }) : super(key: key);
-  final int index;
+
+  final bool isDarkMode;
+  final TextTheme textTheme;
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +26,14 @@ class ProductCard extends StatelessWidget {
       return 4;
     }
 
-    final TextTheme textTheme = Theme.of(context).textTheme;
-    final bool isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
-    return Container(
-      width: 200,
-      // height: 350,
-      padding: const EdgeInsets.only(right: 8.0),
+    return SizedBox(
+      height: 200,
       child: Card(
         elevation: 5,
         color: isDarkMode ? AppColors.blackDark : AppColors.backgroundLight,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
         child: Stack(
           children: [
             Column(
@@ -56,8 +56,9 @@ class ProductCard extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
+                const SizedBox(height: 10),
                 Padding(
-                  padding: const EdgeInsets.only(left: 8.0, top: 15, right: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -74,7 +75,11 @@ class ProductCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: textTheme.subtitle1
                               ?.copyWith(letterSpacing: -.5)),
-                      PriceText(context: context, oldP: "20.5", newP: "15.5"),
+                      PriceText(
+                        context: context,
+                        oldP: "20.5",
+                        newP: "15.5",
+                      ),
                     ],
                   ),
                 ),
@@ -83,7 +88,7 @@ class ProductCard extends StatelessWidget {
             Positioned(
               top: 156,
               right: -3,
-              child: FavoriteButton(id: index.toString()),
+              child: FavoriteButton(id: 1.toString()),
             ),
             Positioned(
               top: 10,
@@ -112,4 +117,3 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
-
