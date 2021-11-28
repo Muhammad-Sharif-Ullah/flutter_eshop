@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_eshop/theme/app_colors.dart';
+import 'package:flutter_eshop/theme/fonts_names.dart';
 
-class PasswordField extends StatelessWidget {
+class PasswordField extends StatefulWidget {
   const PasswordField(
       {Key? key,
       required this.label,
@@ -17,27 +17,36 @@ class PasswordField extends StatelessWidget {
   final String? Function(String?)? validator;
 
   @override
+  State<PasswordField> createState() => _PasswordFieldState();
+}
+
+class _PasswordFieldState extends State<PasswordField> {
+  bool isVisibilityOn = false;
+  @override
   Widget build(BuildContext context) {
-    return  TextFormField(
-      controller: passCNT,
-      validator: validator,
+    return TextFormField(
+      controller: widget.passCNT,
+      validator: widget.validator,
       // keyboardType: TextInputType.visiblePassword,
-      // obscureText: controller.visibility.value,
+      obscureText: isVisibilityOn,
       decoration: InputDecoration(
         border: InputBorder.none,
-        labelText: label,
+        labelText: widget.label,
         labelStyle: const TextStyle(color: Colors.grey),
-        hintText: hintText,
+        hintText: widget.hintText,
+        errorStyle: const TextStyle(
+          fontSize: 10,
+          fontFamily: FontsName.regular,
+        ),
         suffixIcon: IconButton(
-          icon: const Icon(Icons.visibility, color: AppColors.primary),
-          // icon: controller.visibility.value
-          //     ? Icon(Icons.visibility, color: AppColors.primary)
-          //     : Icon(Icons.visibility_off, color: AppColors.primary),
+          // icon: const Icon(Icons.visibility, color: AppColors.primary),
+          icon: isVisibilityOn
+              ? const Icon(Icons.visibility, color: AppColors.primary)
+              : const Icon(Icons.visibility_off, color: AppColors.primary),
           onPressed: () {
-            // print('calling');
-            // print(controller.visibility.value);
-            // controller.visibility.toggle();
-            // print(controller.visibility.value);
+            setState(() {
+              isVisibilityOn = !isVisibilityOn;
+            });
           },
         ),
       ),
