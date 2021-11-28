@@ -43,6 +43,7 @@ class HomeView extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, int index) {
                     return InkWell(
+                      borderRadius: BorderRadius.circular(10),
                       onTap: () {},
                       child: HomeItemCard(
                         isDarkMode: isDarkMode,

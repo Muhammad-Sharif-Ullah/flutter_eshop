@@ -155,6 +155,7 @@ class _FavoriteViewState extends State<FavoriteView> {
       itemBuilder: (context, int index) {
         return InkWell(
           onTap: () {},
+          borderRadius: BorderRadius.circular(10),
           child: FavoriteItemVerticalCard(
             isDarkMode: isDarkMode,
             textTheme: textTheme,
@@ -171,6 +172,7 @@ class _FavoriteViewState extends State<FavoriteView> {
       itemBuilder: (context, int index) {
         return InkWell(
           onTap: () {},
+          borderRadius: BorderRadius.circular(10),
           child: FavoriteItemHozontalCard(
             isDarkMode: isDarkMode,
             textTheme: textTheme,
