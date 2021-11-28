@@ -171,7 +171,10 @@ class _FavoriteViewState extends State<FavoriteView> {
       itemBuilder: (context, int index) {
         return InkWell(
           onTap: () {},
-          child: const FavoriteItemHozontalCard(),
+          child: FavoriteItemHozontalCard(
+            isDarkMode: isDarkMode,
+            textTheme: textTheme,
+          ),
         );
       },
     );

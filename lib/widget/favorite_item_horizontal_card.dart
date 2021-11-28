@@ -6,16 +6,16 @@ import 'package:flutter_eshop/widget/rating_widget.dart';
 
 class FavoriteItemHozontalCard extends StatelessWidget {
   const FavoriteItemHozontalCard({
+    required this.isDarkMode,
+    required this.textTheme,
     Key? key,
   }) : super(key: key);
 
+  final bool isDarkMode;
+  final TextTheme textTheme;
+
   @override
   Widget build(BuildContext context) {
-    final bool isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
-
-    final TextTheme textTheme = Theme.of(context).textTheme;
-
     int getRating() => 4;
     // product.rating!.values.fold<int>(
     //     0, (previousValue, element) => (previousValue + element)) ~/
@@ -69,13 +69,13 @@ class FavoriteItemHozontalCard extends StatelessWidget {
                         letterSpacing: -.3,
                       ),
                     ),
-                    const Text(
+                    Text(
                       "Product Type",
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontFamily: FontsName.bold,
                         fontSize: 16,
-                        color: Colors.black,
+                        color: isDarkMode ? Colors.white : Colors.black,
                         letterSpacing: -.8,
                       ),
                       // style:

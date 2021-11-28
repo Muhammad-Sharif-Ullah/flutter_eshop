@@ -77,13 +77,13 @@ class FavoriteItemVerticalCard extends StatelessWidget {
                     ),
                     // style: textTheme.caption?.copyWith(
                     //     color: Colors.grey, letterSpacing: -.3)),
-                    const Text(
+                    Text(
                       "Product Type",
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontFamily: FontsName.bold,
                         fontSize: 16,
-                        color: Colors.black,
+                        color: isDarkMode ? Colors.white : Colors.black,
                         letterSpacing: -.8,
                       ),
                       // style:
