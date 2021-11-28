@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
 
                         const SizedBox(height: 32),
-                        buildLoginButton(context, width),
+                        buildLoginButton(context, width, _formKey),
                         // const SizedBox(height: 16),
                         Center(
                           child: TextButton(
@@ -138,12 +138,19 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget buildLoginButton(BuildContext context, double width) {
+  Widget buildLoginButton(
+      BuildContext context, double width, GlobalKey<FormState> formKey) {
     return BigSplashButton(
       width: width,
       height: 48,
       text: "Login",
-      onPressed: () async {},
+      onPressed: () async {
+        if (formKey.currentState!.validate()) {
+          print.call("validation complete");
+        } else {
+          print.call("Validation Not Complete");
+        }
+      },
     );
   }
 }
