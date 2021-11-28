@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_eshop/theme/fonts_names.dart';
 
 class TextInputField extends StatelessWidget {
   const TextInputField({
@@ -27,10 +26,6 @@ class TextInputField extends StatelessWidget {
         labelText: label,
         labelStyle: const TextStyle(color: Colors.grey),
         hintText: hintText,
-        errorStyle: const TextStyle(
-          fontSize: 10,
-          fontFamily: FontsName.regular,
-        ),
       ),
     );
   }

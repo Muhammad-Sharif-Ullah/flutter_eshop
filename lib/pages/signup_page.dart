@@ -23,7 +23,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   final TextEditingController _password = TextEditingController();
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +141,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         // Obx(() => controller.isRequesting.value
                         //     ? CircularProgressIndicator()
                         // : buildSignUpButton(context)),
-                        buildSignUpButton(context, width, textTheme, _formKey),
+                        buildSignUpButton(context, width, textTheme),
                         // const SizedBox(height: 30),
                       ],
                     ),
@@ -184,8 +184,8 @@ class _SignUpPageState extends State<SignUpPage> {
   Icon buildNoImageWidget(bool isDarkMode) => Icon(Icons.person_outlined,
       size: 40, color: isDarkMode ? AppColors.white : AppColors.blackDark);
 
-  MaterialButton buildSignUpButton(BuildContext context, double width,
-      TextTheme textTheme, GlobalKey<FormState> formKey) {
+  MaterialButton buildSignUpButton(
+      BuildContext context, double width, TextTheme textTheme) {
     return MaterialButton(
       height: 48,
       minWidth: width,
@@ -194,11 +194,14 @@ class _SignUpPageState extends State<SignUpPage> {
       child: Text('Sing Up',
           style: textTheme.subtitle1?.copyWith(color: Colors.white)),
       onPressed: () async {
-        if (_formKey.currentState!.validate()) {
-          print.call("Validation Completet");
-        } else {
-          print.call("Validation Completet");
-        }
+        // if (_formKey.currentState!.validate()) {
+        //   final result = await controller.signUp(
+        //       _email.text.trim(), _password.text.trim(), _name.text.trim());
+        //   if(result) {
+        //     Get.offAllNamed(Routes.HOME);
+        //     print("Successfully signup");
+        //   }
+        // }
       },
     );
   }

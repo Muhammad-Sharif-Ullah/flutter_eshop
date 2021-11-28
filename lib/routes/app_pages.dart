@@ -8,12 +8,12 @@ part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
-  static const String initalRoutes = AppRoutes.login;
+  static const String initalRoutes = AppRoutes.home;
   static final routes = {
     AppRoutes.home: (context) => const HomePage(),
     AppRoutes.login: (context) => const LoginPage(),
     AppRoutes.signup: (context) => const SignUpPage(),
     AppRoutes.forgotPassword: (context) => const ForgotPassPage(),
-    AppRoutes.settings: (context) => const SettingsView(),
+    AppRoutes.settings : (context)=> const SettingsView(),
   };
 }
