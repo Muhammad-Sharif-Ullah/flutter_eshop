@@ -149,7 +149,20 @@ class _SignUpPageState extends State<SignUpPage> {
                         // Obx(() => controller.isRequesting.value
                         //     ? CircularProgressIndicator()
                         // : buildSignUpButton(context)),
-                        buildSignUpButton(context, width, textTheme, _formKey),
+                        Consumer<AuthProvider>(
+                          builder: (context, authP, child) => authP.isRequesting
+                              ? Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 10.0,
+                                  ),
+                                  child: SizedBox(
+                                    height: height * .005,
+                                    child: const LinearProgressIndicator(),
+                                  ),
+                                )
+                              : buildSignUpButton(
+                                  context, width, textTheme, _formKey),
+                        ),
                       ],
                     ),
                     const Spacer(),
@@ -203,6 +216,7 @@ class _SignUpPageState extends State<SignUpPage> {
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
           print.call("Validation Completet");
+          context.read<AuthProvider>().getSinUp(_name.text.trim(), _email.text.trim(), _password.text.trim(), context);
         } else {
           print.call("Validation Completet");
         }
