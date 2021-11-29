@@ -9,14 +9,14 @@ import 'firebase_storage.dart';
 
 class FireBaseCollection {
   static final FirebaseFirestore _instance = FirebaseFirestore.instance;
-  static final String users = 'users';
-  static final String beg = 'beg';
-  static final String favorites = 'favorites';
-  static final String products = 'products';
-  static final String address = 'address';
-  static final String reviews = 'reviews';
-  static final String orders = 'orders';
-  static final String shipping = 'shipping_address';
+  static const String beg = 'beg';
+  static const String favorites = 'favorites';
+  static const String products = 'products';
+  static const String users = 'users';
+  static const String address = 'address';
+  static const String reviews = 'reviews';
+  static const String orders = 'orders';
+  static const String shipping = 'shipping_address';
 
   static saveUserData(String name, String? url, User user) async {
     await _instance.collection(users).doc(user.uid).set({
@@ -26,8 +26,11 @@ class FireBaseCollection {
       'avatar': url,
     }).onError((FirebaseException error, stackTrace) {
       print.call(error.code);
+      print.call(" ------------------------");
       // return errorSnackBar("Could not sing up", error.code.toString());
     }).catchError((error) {
+      print.call(" ------------------------");
+
       print.call(error.code);
       // return errorSnackBar("Could not sing up", error.toString());
     });
