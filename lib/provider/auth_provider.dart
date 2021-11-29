@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_eshop/services/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -30,13 +27,5 @@ class AuthProvider with ChangeNotifier {
   getLogin() async {}
 
   getSinUp(
-      String userName, String email, String pass, BuildContext context) async {
-    // await FireBaseAuth.signUp(
-    //     email, pass, userName, isRequesting, File(imagePicked));
-    const snackBar = SnackBar(content: Text('Yay! A SnackBar!'));
-
-// Find the ScaffoldMessenger in the widget tree
-// and use it to show a SnackBar.
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
+      String userName, String email, String pass, BuildContext context) async {}
 }
