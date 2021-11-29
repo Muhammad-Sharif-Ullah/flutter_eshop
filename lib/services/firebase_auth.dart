@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_eshop/model/auth_response_model.dart';
 
 import 'firebase_collection.dart';
 import 'firebase_storage.dart';
@@ -20,17 +21,17 @@ class FireBaseAuth {
     return await _authInstance
         .signInWithEmailAndPassword(email: email, password: pass)
         .then((UserCredential value) {
-    isRequesting = !isRequesting;
+      isRequesting = !isRequesting;
       print.call(value.user);
       return true;
     }).onError((FirebaseAuthException error, stackTrace) {
       print.call('ON ERROR');
-    isRequesting = !isRequesting;
+      isRequesting = !isRequesting;
       // errorSnackBar("Could not sing in", error.code);
       return false;
     }).catchError((onError) {
       print.call('Catch ERROR');
-    isRequesting = !isRequesting;
+      isRequesting = !isRequesting;
       // errorSnackBar("Could not sing in", onError.toString());
       return false;
     });
@@ -44,24 +45,26 @@ class FireBaseAuth {
   ///           3. save image in the firebase storage
   ///       else:
   ///           show the relevant issure
-  static Future<bool> signUp(String email, String password, String name,
-    bool isRequesting, File avatar) async {
+  static Future<AuthResponseModel> signUp(String email, String password,
+      String name, bool isRequesting, File avatar) async {
     isRequesting = !isRequesting;
     return await _authInstance
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((UserCredential value) {
       print.call(value.user);
-    isRequesting = !isRequesting;
+      // isRequesting = !isRequesting;
       storeUserData(value.user!, name, avatar);
-      return true;
+      return AuthResponseModel(true, "Successfully SignUp");
     }).onError((FirebaseAuthException error, stackTrace) {
-    isRequesting = !isRequesting;
+      // isRequesting = !isRequesting;
       // errorSnackBar("Could not sing up", error.code);
-      return false;
+      // return false;
+      return AuthResponseModel(false, error.code);
     }).catchError((error) {
-    isRequesting = !isRequesting;
+      // isRequesting = !isRequesting;
       // errorSnackBar("Could not sing up", error.toString());
-      return false;
+      // return false;
+      return AuthResponseModel(false, error.code);
     });
   }
 
