@@ -18,7 +18,6 @@ class FlutterEshop extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // Provider<AuthProvider>(create: (context)=> AuthProvider())
         ChangeNotifierProvider<AuthProvider>(create: (context)=> AuthProvider()),
       ],
       child: MaterialApp(
