@@ -69,9 +69,6 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:multidex:1.0.3'
-<<<<<<< HEAD
     // implementation platform('com.google.firebase:firebase-bom:29.0.0')
     // implementation 'com.google.firebase:firebase-analytics'
-=======
->>>>>>> 5373471 (Had MultiDex Problem Fix that from app lavel gradel file and Upgrade minSdkVersion 16 to 19 for Firebase Storage bacause it does not support 16 version)
 }
