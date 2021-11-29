@@ -13,7 +13,7 @@ class BegView extends StatelessWidget {
         MediaQuery.of(context).platformBrightness == Brightness.dark;
     final Size size = MediaQuery.of(context).size;
 
-    final double height = size.height;
+    // final double height = size.height;
     final double width = size.width;
     final TextTheme textTheme = Theme.of(context).textTheme;
 

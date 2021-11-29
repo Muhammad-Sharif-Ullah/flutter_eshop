@@ -171,7 +171,7 @@ class _SettingsViewState extends State<SettingsView> {
 
   Future<dynamic> changePassword(BuildContext context, double height) {
     TextEditingController oldPASS = TextEditingController();
-    TextEditingController newPAss = TextEditingController();
+    // TextEditingController newPAss = TextEditingController();
 
     return showModalBottomSheet<void>(
       context: context,
@@ -198,41 +198,7 @@ class _SettingsViewState extends State<SettingsView> {
 
   Future<dynamic> changeDOB(
       DateTime newDOB, DateTime oldDOB, bool isDarkMode, BuildContext context) {
-    // return Get.defaultDialog(
-    //   backgroundColor: isDarkMode ? AppColors.blackDark : AppColors.white,
-    //   title: "Select Date Of Birth",
-    //   titleStyle:
-    //       TextStyle(color: !isDarkMode ? AppColors.blackDark : AppColors.white),
-    //   confirm: ElevatedButton(
-    //     onPressed: () {
-    //       //TODO: Changing Code with Backend
-    //       newDOB = oldDOB;
-    //       // Get.back();
-    //       Navigator.pop(context);
-    //     },
-    //     child: const Text("Change Now"),
-    //     style: ElevatedButton.styleFrom(primary: AppColors.success),
-    //   ),
-    //   cancel: ElevatedButton(
-    //       onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
-    //   content: Container(
-    //     color: Colors.white,
-    //     height: 300,
-    //     child: CupertinoTheme(
-    //       data: CupertinoThemeData(
-    //         brightness: isDarkMode ? Brightness.dark : Brightness.light,
-    //       ),
-    //       child: CupertinoDatePicker(
-    //         backgroundColor: isDarkMode ? AppColors.blackDark : AppColors.white,
-    //         mode: CupertinoDatePickerMode.date,
-    //         initialDateTime: newDOB,
-    //         onDateTimeChanged: (DateTime newDateTime) {
-    //           oldDOB = newDateTime;
-    //         },
-    //       ),
-    //     ),
-    //   ),
-    // );
+   
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -245,7 +211,6 @@ class _SettingsViewState extends State<SettingsView> {
             onPressed: () {
               //TODO: Changing Code with Backend
               newDOB = oldDOB;
-              // Get.back();
               Navigator.pop(context);
             },
             child: const Text("Change Now"),
