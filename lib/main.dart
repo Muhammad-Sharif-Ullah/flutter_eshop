@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_eshop/provider/auth_provider.dart';
 import 'package:flutter_eshop/routes/app_pages.dart';
 import 'package:flutter_eshop/theme/app_theme.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,12 +14,18 @@ class FlutterEshop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: AppPages.initalRoutes,
-      debugShowCheckedModeBanner: false,
-      routes: AppPages.routes,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
+    return MultiProvider(
+      providers: [
+        // Provider<AuthProvider>(create: (context)=> AuthProvider())
+        ChangeNotifierProvider<AuthProvider>(create: (context)=> AuthProvider()),
+      ],
+      child: MaterialApp(
+        initialRoute: AppPages.initalRoutes,
+        debugShowCheckedModeBanner: false,
+        routes: AppPages.routes,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+      ),
     );
   }
 }

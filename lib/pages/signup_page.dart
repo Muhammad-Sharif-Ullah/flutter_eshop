@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_eshop/provider/auth_provider.dart';
 import 'package:flutter_eshop/routes/app_pages.dart';
 import 'package:flutter_eshop/theme/app_colors.dart';
 import 'package:flutter_eshop/theme/app_constant.dart';
@@ -8,6 +11,7 @@ import 'package:flutter_eshop/widget/google_auth_btn.dart';
 import 'package:flutter_eshop/widget/input_container_widget.dart';
 import 'package:flutter_eshop/widget/password_field.dart';
 import 'package:flutter_eshop/widget/text_input.dart';
+import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -79,10 +83,16 @@ class _SignUpPageState extends State<SignUpPage> {
                           borderRadius: BorderRadius.circular(100000),
                           child: InkWell(
                             borderRadius: BorderRadius.circular(100000),
-                            child: buildNoImageWidget(isDarkMode),
-                            onTap: () {},
-                            // child: controller.image.value != ''? Image.file(File(controller.image.value),fit: BoxFit.cover,): buildNoImageWidget(isDarkMode)),
-                            // onTap: () => controller.chooseImageSource(),
+                            child: context.watch<AuthProvider>().imagePicked !=
+                                    ''
+                                ? Image.file(
+                                    File(
+                                      context.watch<AuthProvider>().imagePicked,
+                                    ),
+                                    fit: BoxFit.cover,
+                                  )
+                                : buildNoImageWidget(isDarkMode),
+                            onTap: () => _choseImage(context),
                           ),
                         ),
                       ),
@@ -91,7 +101,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       flex: 1,
                     ),
 
-                    // const SizedBox(height: 20),
                     Column(
                       children: [
                         InputBoxWidget(
@@ -136,13 +145,11 @@ class _SignUpPageState extends State<SignUpPage> {
                                 Navigator.pushNamed(context, AppRoutes.login),
                           ),
                         ),
-                        // const SizedBox(height: 20),
 
                         // Obx(() => controller.isRequesting.value
                         //     ? CircularProgressIndicator()
                         // : buildSignUpButton(context)),
                         buildSignUpButton(context, width, textTheme, _formKey),
-                        // const SizedBox(height: 30),
                       ],
                     ),
                     const Spacer(),
@@ -200,6 +207,37 @@ class _SignUpPageState extends State<SignUpPage> {
           print.call("Validation Completet");
         }
       },
+    );
+  }
+
+  Future<dynamic> _choseImage(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Select Image Source'),
+        actions: [
+          ElevatedButton.icon(
+            onPressed: () {
+              context.read<AuthProvider>().getImage(true, context);
+            },
+            icon: const Icon(
+              Icons.photo_album,
+              color: Colors.white,
+            ),
+            label: const Text('Gallery', style: TextStyle(color: Colors.white)),
+          ),
+          ElevatedButton.icon(
+            onPressed: () {
+              context.read<AuthProvider>().getImage(false, context);
+            },
+            icon: const Icon(Icons.camera, color: Colors.white),
+            label: const Text(
+              'Camera',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

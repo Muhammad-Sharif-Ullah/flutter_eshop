@@ -10,7 +10,7 @@ class BottomNavigationProvider with ChangeNotifier {
 
   Widget get currentView => _widgetView[_currentIndex];
 
-  final List<Widget> _widgetView =  const [
+  final List<Widget> _widgetView = const [
     HomeView(),
     CategoryView(),
     BegView(),
@@ -18,17 +18,9 @@ class BottomNavigationProvider with ChangeNotifier {
     ProfleView()
   ];
 
-  // set currentTab(int tab){
-  // _currentIndex = tab;
-  //   notifyListeners();
-  // }
-  // set  currentTabChange(int tab) {
-  //   _currentIndex = tab;
-  //   notifyListeners();
-  // }
   int get currentTab => _currentIndex;
 
-    currentTabChange(int index) {
+  currentTabChange(int index) {
     _currentIndex = index;
     notifyListeners();
   }
