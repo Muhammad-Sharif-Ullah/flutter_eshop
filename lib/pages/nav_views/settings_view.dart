@@ -162,7 +162,7 @@ class _SettingsViewState extends State<SettingsView> {
                             .currentTabChange(0);
                         context.read<AccountProvider>().logOut(context);
                       },
-                      icon: const Icon(Icons.logout),
+                      icon: const Icon(Icons.logout, color: Colors.white),
                       label: const Text("Logout",
                           style: TextStyle(color: Colors.white)),
                     ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_eshop/provider/account_provider.dart';
 import 'package:flutter_eshop/routes/app_pages.dart';
 import 'package:flutter_eshop/theme/app_constant.dart';
+import 'package:flutter_eshop/widget/avatar_widget.dart';
 import 'package:flutter_eshop/widget/bottom_nav_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -47,40 +48,9 @@ class ProfleView extends StatelessWidget {
               const SizedBox(height: 20),
               Row(
                 children: [
-                  // Container(
-                  //   padding: const EdgeInsets.all(4),
-                  //   height: 60,
-                  //   width: 60,
-                  //   decoration: BoxDecoration(
-                  //     shape: BoxShape.circle,
-                  //     border: Border.all(color: Colors.greenAccent, width: 3),
-                  //     image: DecorationImage
-                  //   ),
-                  // ),
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.greenAccent, width: 3),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100000000),
-                      child: CachedNetworkImage(
-                        imageUrl: user!.photoURL!,
-                        height: 60,
-                        width: 60,
-                        fit: BoxFit.cover,
-                        filterQuality: FilterQuality.high,
-                        fadeInCurve: Curves.bounceIn,
-                        // progressIndicatorBuilder:
-                        //     (context, url, downloadProgress) =>
-                        //         const CupertinoActivityIndicator(),
-                        errorWidget: (context, url, error) {
-                          print.call(error);
-                          return const Icon(Icons.error);
-                        },
-                      ),
-                    ),
+                  AvatarWidget(
+                    url: user!.photoURL!,
+                    radius: 60,
                   ),
                   const SizedBox(width: 10),
                   Column(
@@ -145,12 +115,7 @@ class ProfleView extends StatelessWidget {
                 title: 'Settings',
                 text: 'Notification and Password',
                 onTap: () => Navigator.pushNamed(context, AppRoutes.settings),
-                // onTap: () {},
               ),
-              // onTap: () async {
-              //   await FireBaseAuth.logOut();
-              //   Get.offAllNamed(Routes.AUTHENTICATION);
-              // },),
               const SizedBox(height: 20),
             ],
           ),
