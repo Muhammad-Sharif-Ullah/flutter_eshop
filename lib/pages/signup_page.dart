@@ -216,7 +216,8 @@ class _SignUpPageState extends State<SignUpPage> {
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
           print.call("Validation Completet");
-          context.read<AuthProvider>().getSinUp(_name.text.trim(), _email.text.trim(), _password.text.trim(), context);
+          context.read<AuthProvider>().getSingUp(_name.text.trim(),
+              _email.text.trim(), _password.text.trim(), context);
         } else {
           print.call("Validation Completet");
         }

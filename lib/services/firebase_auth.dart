@@ -15,25 +15,29 @@ class FireBaseAuth {
 
   ///Login with email and password
   ///if not exist throw errors
-  static Future<bool> login(
-      String email, String pass, bool isRequesting) async {
-    isRequesting = !isRequesting;
+  static Future<AuthResponseModel> login(
+      String email, String pass) async {
+    // isRequesting = !isRequesting;
     return await _authInstance
         .signInWithEmailAndPassword(email: email, password: pass)
         .then((UserCredential value) {
-      isRequesting = !isRequesting;
+      // isRequesting = !isRequesting;
       print.call(value.user);
-      return true;
+      // return true;
+      return AuthResponseModel(true, "Login Success");
     }).onError((FirebaseAuthException error, stackTrace) {
       print.call('ON ERROR');
-      isRequesting = !isRequesting;
+      // isRequesting = !isRequesting;
       // errorSnackBar("Could not sing in", error.code);
-      return false;
+      return AuthResponseModel(false, error.code);
+
+      // return false;
     }).catchError((onError) {
       print.call('Catch ERROR');
-      isRequesting = !isRequesting;
+      // isRequesting = !isRequesting;
       // errorSnackBar("Could not sing in", onError.toString());
-      return false;
+      // return false;
+      return AuthResponseModel(false, onError.code);
     });
   }
 
@@ -46,8 +50,8 @@ class FireBaseAuth {
   ///       else:
   ///           show the relevant issure
   static Future<AuthResponseModel> signUp(String email, String password,
-      String name, bool isRequesting, File avatar) async {
-    isRequesting = !isRequesting;
+      String name,  File avatar) async {
+    // isRequesting = !isRequesting;
     return await _authInstance
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((UserCredential value) {

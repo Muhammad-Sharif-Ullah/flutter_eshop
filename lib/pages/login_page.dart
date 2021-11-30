@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_eshop/provider/auth_provider.dart';
 import 'package:flutter_eshop/routes/app_pages.dart';
 import 'package:flutter_eshop/theme/app_constant.dart';
 import 'package:flutter_eshop/utils/validator.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_eshop/widget/google_auth_btn.dart';
 import 'package:flutter_eshop/widget/input_container_widget.dart';
 import 'package:flutter_eshop/widget/password_field.dart';
 import 'package:flutter_eshop/widget/text_input.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -91,7 +93,21 @@ class _LoginPageState extends State<LoginPage> {
                         ),
 
                         const SizedBox(height: 32),
-                        buildLoginButton(context, width, _formKey),
+
+                        Consumer<AuthProvider>(
+                          builder: (context, authP, child) => authP.isRequesting
+                              ? Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 10.0,
+                                  ),
+                                  child: SizedBox(
+                                    height: height * .005,
+                                    child: const LinearProgressIndicator(),
+                                  ),
+                                )
+                              : buildLoginButton(context, width, _formKey),
+                        ),
+
                         // const SizedBox(height: 16),
                         Center(
                           child: TextButton(
@@ -147,8 +163,9 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () async {
         if (formKey.currentState!.validate()) {
           print.call("validation complete");
-        } else {
-          print.call("Validation Not Complete");
+          context
+              .read<AuthProvider>()
+              .getLogin(_email.text.trim(), _password.text.trim(), context);
         }
       },
     );
