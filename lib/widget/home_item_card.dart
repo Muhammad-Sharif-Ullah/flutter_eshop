@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_eshop/model/product_mode.dart';
 import 'package:flutter_eshop/theme/app_colors.dart';
+import 'package:flutter_eshop/theme/fonts_names.dart';
 import 'package:flutter_eshop/widget/cached_network_widget.dart';
 import 'package:flutter_eshop/widget/favorite_button.dart';
 import 'package:flutter_eshop/widget/price_text_widget.dart';
@@ -45,7 +46,7 @@ class HomeItemCard extends StatelessWidget {
               children: [
                 CachedNetworkWidget(
                   url: product.images![0],
-                  height: 184,
+                  height: 190,
                   width: 200,
                 ),
                 const SizedBox(height: 10),
@@ -58,15 +59,26 @@ class HomeItemCard extends StatelessWidget {
                         rated: getRating(),
                         peopleCount: getPeopleCount(),
                       ),
-                      Text(product.brand!,
-                          //'${product.brand}'
-                          overflow: TextOverflow.ellipsis,
-                          style: textTheme.caption?.copyWith(
-                              color: Colors.grey, letterSpacing: -.3)),
-                      Text(product.name!,
-                          overflow: TextOverflow.ellipsis,
-                          style: textTheme.subtitle1
-                              ?.copyWith(letterSpacing: -.5)),
+                      Text(
+                        product.brand!,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontFamily: FontsName.regular,
+                          fontSize: 14,
+                          color: Colors.grey,
+                          letterSpacing: -.3,
+                        ),
+                      ),
+                      Text(
+                        product.name!,
+                        overflow: TextOverflow.visible,
+                        style: TextStyle(
+                          fontFamily: FontsName.bold,
+                          fontSize: 14,
+                          color: isDarkMode ? Colors.white : Colors.black,
+                          letterSpacing: -1.1,
+                        ),
+                      ),
                       PriceText(
                         context: context,
                         oldP: product.oldPrice,
@@ -80,7 +92,7 @@ class HomeItemCard extends StatelessWidget {
             Positioned(
               top: 156,
               right: -4,
-              child: FavoriteButton(id: 1.toString()),
+              child: FavoriteButton(id: product.id.toString()),
             ),
             Positioned(
               top: 10,
