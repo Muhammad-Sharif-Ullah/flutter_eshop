@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_eshop/provider/account_provider.dart';
+import 'package:flutter_eshop/provider/bottom_navigation_provider.dart';
 import 'package:flutter_eshop/theme/app_colors.dart';
 import 'package:flutter_eshop/theme/app_constant.dart';
 import 'package:flutter_eshop/utils/validator.dart';
 import 'package:flutter_eshop/widget/password_field.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/src/provider.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({Key? key}) : super(key: key);
@@ -153,12 +156,16 @@ class _SettingsViewState extends State<SettingsView> {
                   child: SizedBox(
                     width: width * .5,
                     child: ElevatedButton.icon(
-                        onPressed: () async {
-                          // await FireBaseAuth.logOut();
-                          // Get.offAllNamed(Routes.AUTHENTICATION);
-                        },
-                        icon: const Icon(Icons.logout),
-                        label: const Text("Logout")),
+                      onPressed: () {
+                        context
+                            .read<BottomNavigationProvider>()
+                            .currentTabChange(0);
+                        context.read<AccountProvider>().logOut(context);
+                      },
+                      icon: const Icon(Icons.logout),
+                      label: const Text("Logout",
+                          style: TextStyle(color: Colors.white)),
+                    ),
                   ),
                 )
               ],
@@ -198,7 +205,6 @@ class _SettingsViewState extends State<SettingsView> {
 
   Future<dynamic> changeDOB(
       DateTime newDOB, DateTime oldDOB, bool isDarkMode, BuildContext context) {
-   
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(

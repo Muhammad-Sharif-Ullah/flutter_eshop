@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_eshop/provider/account_provider.dart';
 import 'package:flutter_eshop/provider/auth_provider.dart';
+import 'package:flutter_eshop/provider/bottom_navigation_provider.dart';
 import 'package:flutter_eshop/routes/app_pages.dart';
 import 'package:flutter_eshop/theme/app_theme.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +20,12 @@ class FlutterEshop extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AuthProvider>(create: (context)=> AuthProvider()),
+        ChangeNotifierProvider<AuthProvider>(
+            create: (context) => AuthProvider()),
+        ChangeNotifierProvider<AccountProvider>(
+            create: (context) => AccountProvider()),
+        ChangeNotifierProvider<BottomNavigationProvider>(
+            create: (context) => BottomNavigationProvider())
       ],
       child: MaterialApp(
         initialRoute: AppPages.initalRoutes,

@@ -11,12 +11,9 @@ class HomePage extends StatelessWidget {
      * Here Wrap with BottomNavigationProvider
      * In each view change from BottomNavigationProvider
      */
-    return ChangeNotifierProvider<BottomNavigationProvider>(
-      create: (BuildContext context) => BottomNavigationProvider(),
-      child: Consumer<BottomNavigationProvider>(
-          builder: (context, bnProvider, child) {
-        return bnProvider.currentView;
-      }),
-    );
+    return Consumer<BottomNavigationProvider>(
+        builder: (context, bnProvider, child) {
+      return bnProvider.currentView;
+    });
   }
 }

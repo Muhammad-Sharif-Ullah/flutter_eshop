@@ -1,13 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_eshop/provider/account_provider.dart';
 import 'package:flutter_eshop/routes/app_pages.dart';
 import 'package:flutter_eshop/theme/app_constant.dart';
 import 'package:flutter_eshop/widget/bottom_nav_widget.dart';
+import 'package:provider/provider.dart';
 
 class ProfleView extends StatelessWidget {
   const ProfleView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<AccountProvider>().currentUser;
     // return const Scaffold(
     //   extendBody: true,
     //   bottomNavigationBar:CustomBottomNavigator(),
@@ -42,13 +47,39 @@ class ProfleView extends StatelessWidget {
               const SizedBox(height: 20),
               Row(
                 children: [
+                  // Container(
+                  //   padding: const EdgeInsets.all(4),
+                  //   height: 60,
+                  //   width: 60,
+                  //   decoration: BoxDecoration(
+                  //     shape: BoxShape.circle,
+                  //     border: Border.all(color: Colors.greenAccent, width: 3),
+                  //     image: DecorationImage
+                  //   ),
+                  // ),
                   Container(
                     padding: const EdgeInsets.all(4),
-                    height: 60,
-                    width: 60,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.greenAccent, width: 3),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100000000),
+                      child: CachedNetworkImage(
+                        imageUrl: user!.photoURL!,
+                        height: 60,
+                        width: 60,
+                        fit: BoxFit.cover,
+                        filterQuality: FilterQuality.high,
+                        fadeInCurve: Curves.bounceIn,
+                        // progressIndicatorBuilder:
+                        //     (context, url, downloadProgress) =>
+                        //         const CupertinoActivityIndicator(),
+                        errorWidget: (context, url, error) {
+                          print.call(error);
+                          return const Icon(Icons.error);
+                        },
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -57,12 +88,12 @@ class ProfleView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        'User Name',
+                        user.displayName!,
                         style: textTheme.headline3
                             ?.copyWith(letterSpacing: -.1, wordSpacing: -1),
                       ),
                       Text(
-                        'useremail@gmail.com',
+                        user.email!,
                         style: textTheme.bodyText2?.copyWith(
                             color: Colors.grey,
                             letterSpacing: -.1,
