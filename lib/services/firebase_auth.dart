@@ -15,7 +15,7 @@ class FireBaseAuth {
 
   ///Login with email and password
   ///if not exist throw errors
-  static Future<AuthResponseModel> login(
+  static Future<FirebaseResponseModel> login(
       String email, String pass) async {
     // isRequesting = !isRequesting;
     return await _authInstance
@@ -24,12 +24,12 @@ class FireBaseAuth {
       // isRequesting = !isRequesting;
       print.call(value.user);
       // return true;
-      return AuthResponseModel(true, "Login Success");
+      return FirebaseResponseModel(true, "Login Success");
     }).onError((FirebaseAuthException error, stackTrace) {
       print.call('ON ERROR');
       // isRequesting = !isRequesting;
       // errorSnackBar("Could not sing in", error.code);
-      return AuthResponseModel(false, error.code);
+      return FirebaseResponseModel(false, error.code);
 
       // return false;
     }).catchError((onError) {
@@ -37,7 +37,7 @@ class FireBaseAuth {
       // isRequesting = !isRequesting;
       // errorSnackBar("Could not sing in", onError.toString());
       // return false;
-      return AuthResponseModel(false, onError.code);
+      return FirebaseResponseModel(false, onError.code);
     });
   }
 
@@ -49,7 +49,7 @@ class FireBaseAuth {
   ///           3. save image in the firebase storage
   ///       else:
   ///           show the relevant issure
-  static Future<AuthResponseModel> signUp(String email, String password,
+  static Future<FirebaseResponseModel> signUp(String email, String password,
       String name,  File avatar) async {
     // isRequesting = !isRequesting;
     return await _authInstance
@@ -58,17 +58,17 @@ class FireBaseAuth {
       print.call(value.user);
       // isRequesting = !isRequesting;
       storeUserData(value.user!, name, avatar);
-      return AuthResponseModel(true, "Successfully SignUp");
+      return FirebaseResponseModel(true, "Successfully SignUp");
     }).onError((FirebaseAuthException error, stackTrace) {
       // isRequesting = !isRequesting;
       // errorSnackBar("Could not sing up", error.code);
       // return false;
-      return AuthResponseModel(false, error.code);
+      return FirebaseResponseModel(false, error.code);
     }).catchError((error) {
       // isRequesting = !isRequesting;
       // errorSnackBar("Could not sing up", error.toString());
       // return false;
-      return AuthResponseModel(false, error.code);
+      return FirebaseResponseModel(false, error.code);
     });
   }
 

@@ -7,8 +7,8 @@ import 'package:flutter_eshop/widget/favorite_button.dart';
 import 'package:flutter_eshop/widget/price_text_widget.dart';
 import 'package:flutter_eshop/widget/rating_widget.dart';
 
-class HomeItemCard extends StatelessWidget {
-  const HomeItemCard({
+class RelatedProductCard extends StatelessWidget {
+  const RelatedProductCard({
     Key? key,
     required this.isDarkMode,
     required this.textTheme,
@@ -21,13 +21,14 @@ class HomeItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int getPeopleCount() => 5;
 
     int getRating() {
-      // print.call(product.rating);
-      if (product.rating!.isEmpty) return 0;
-      return product.rating!.values.fold<int>(
-              0, (previousValue, element) => (previousValue + element)) ~/
-          product.rating!.length;
+      // if (getPeopleCount() == 0) return 0;
+      // return controller.products[index].rating!.values.fold<int>(
+      //         0, (previousValue, element) => (previousValue + element)) ~/
+      //     controller.products[index].rating!.length;
+      return 4;
     }
 
     return SizedBox(
@@ -56,7 +57,7 @@ class HomeItemCard extends StatelessWidget {
                     children: [
                       RatingWidget(
                         rated: getRating(),
-                        peopleCount: product.rating!.length,
+                        peopleCount: getPeopleCount(),
                       ),
                       Text(
                         product.brand!,

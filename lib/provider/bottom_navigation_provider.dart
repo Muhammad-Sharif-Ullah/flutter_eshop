@@ -12,10 +12,10 @@ class BottomNavigationProvider with ChangeNotifier {
 
   final List<Widget> _widgetView = const [
     HomeView(),
-    CategoryView(),
     BegView(),
     FavoriteView(),
-    ProfleView()
+    CategoryView(),
+    ProfleView(),
   ];
 
   int get currentTab => _currentIndex;

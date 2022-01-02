@@ -1,6 +1,6 @@
-class AuthResponseModel {
+class FirebaseResponseModel {
   final bool isSuccess;
   final String message;
 
-  AuthResponseModel(this.isSuccess, this.message);
+  FirebaseResponseModel(this.isSuccess, this.message);
 }

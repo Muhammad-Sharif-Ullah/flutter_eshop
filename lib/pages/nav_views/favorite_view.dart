@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_eshop/model/product_mode.dart';
+import 'package:flutter_eshop/provider/account_provider.dart';
 import 'package:flutter_eshop/theme/app_colors.dart';
 import 'package:flutter_eshop/theme/app_constant.dart';
 import 'package:flutter_eshop/widget/bottom_nav_widget.dart';
 import 'package:flutter_eshop/widget/favorite_item_horizontal_card.dart';
 import 'package:flutter_eshop/widget/favorite_item_vertical_card.dart';
+import 'package:provider/provider.dart';
 
-class FavoriteView extends StatefulWidget {
+class FavoriteView extends StatelessWidget {
   const FavoriteView({Key? key}) : super(key: key);
-
-  @override
-  State<FavoriteView> createState() => _FavoriteViewState();
-}
-
-class _FavoriteViewState extends State<FavoriteView> {
-  bool isListView = false;
 
   @override
   Widget build(BuildContext context) {
@@ -108,12 +104,15 @@ class _FavoriteViewState extends State<FavoriteView> {
                             child: SizedBox(
                               height: 40,
                               child: InkWell(
-                                child: isListView == true
+                                child: context
+                                            .watch<AccountProvider>()
+                                            .isListView ==
+                                        true
                                     ? const Icon(Icons.list_outlined)
                                     : const Icon(Icons.grid_view),
-                                onTap: () => setState(() {
-                                  isListView = !isListView;
-                                }),
+                                onTap: () => context
+                                    .read<AccountProvider>()
+                                    .toggleListView(),
                               ),
                             ),
                           ),
@@ -127,13 +126,29 @@ class _FavoriteViewState extends State<FavoriteView> {
                 height: height * .01,
               ),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: AppConstant.kPadding),
-                  child: isListView
-                      ? _buildListView(isDarkMode, textTheme)
-                      : _buildGridView(isDarkMode, textTheme),
-                ),
+                child: FutureBuilder<List<ProductModel>>(
+                    future: context.read<AccountProvider>().favoritesList(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text("${snapshot.error}"));
+                      } else if (!snapshot.hasData) {
+                        return const Center(
+                            child: Text("No item in your favorite list"));
+                      }
+                      // print.call("######## ${snapshot.data}");
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppConstant.kPadding,
+                        ),
+                        child: context.watch<AccountProvider>().isListView
+                            ? _buildListView(
+                                isDarkMode, textTheme, context, snapshot.data!)
+                            : _buildGridView(
+                                isDarkMode, textTheme, context, snapshot.data!),
+                      );
+                    }),
               ),
             ],
           ),
@@ -142,12 +157,18 @@ class _FavoriteViewState extends State<FavoriteView> {
     );
   }
 
-  Widget _buildGridView(bool isDarkMode, TextTheme textTheme) {
+  Widget _buildGridView(
+    bool isDarkMode,
+    TextTheme textTheme,
+    BuildContext context,
+    List<ProductModel> product,
+  ) {
+    // print.call("------------ ${product.length}");
     return GridView.builder(
-      itemCount: 12,
+      itemCount: context.watch<AccountProvider>().favoriteIds.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisExtent: 305,
+        mainAxisExtent: 285,
         mainAxisSpacing: 10,
         crossAxisSpacing: 5,
       ),
@@ -159,15 +180,21 @@ class _FavoriteViewState extends State<FavoriteView> {
           child: FavoriteItemVerticalCard(
             isDarkMode: isDarkMode,
             textTheme: textTheme,
+            product: product[index],
           ),
         );
       },
     );
   }
 
-  Widget _buildListView(bool isDarkMode, TextTheme textTheme) {
+  Widget _buildListView(
+    bool isDarkMode,
+    TextTheme textTheme,
+    BuildContext context,
+    List<ProductModel> product,
+  ) {
     return ListView.builder(
-      itemCount: 12,
+      itemCount: context.watch<AccountProvider>().favoriteIds.length,
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, int index) {
         return InkWell(
@@ -176,6 +203,7 @@ class _FavoriteViewState extends State<FavoriteView> {
           child: FavoriteItemHozontalCard(
             isDarkMode: isDarkMode,
             textTheme: textTheme,
+            product: product[index],
           ),
         );
       },

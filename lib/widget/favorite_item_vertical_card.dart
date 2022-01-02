@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_eshop/model/product_mode.dart';
+import 'package:flutter_eshop/provider/account_provider.dart';
 import 'package:flutter_eshop/theme/app_colors.dart';
 import 'package:flutter_eshop/theme/fonts_names.dart';
-import 'package:flutter_eshop/widget/favorite_button.dart';
+import 'package:flutter_eshop/widget/cached_network_widget.dart';
 import 'package:flutter_eshop/widget/price_text_widget.dart';
 import 'package:flutter_eshop/widget/rating_widget.dart';
+import 'package:provider/src/provider.dart';
 
 class FavoriteItemVerticalCard extends StatelessWidget {
   const FavoriteItemVerticalCard({
     Key? key,
     required this.isDarkMode,
     required this.textTheme,
+    required this.product,
   }) : super(key: key);
 
   final bool isDarkMode;
   final TextTheme textTheme;
-
+  final ProductModel product;
   @override
   Widget build(BuildContext context) {
     int getPeopleCount() => 5;
@@ -38,22 +42,10 @@ class FavoriteItemVerticalCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // CachedNetworkWidget(
-              //   url: controller.products[index].images!.first,
-              //   height: 184,
-              //   width: 200,
-              // ),
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-                child: Image.asset(
-                  "assets/images/banner1.jpg",
-                  height: 184,
-                  width: 200,
-                  fit: BoxFit.cover,
-                ),
+              CachedNetworkWidget(
+                url: product.images!.first,
+                height: 184,
+                width: 200,
               ),
               const SizedBox(height: 10),
               Padding(
@@ -65,10 +57,10 @@ class FavoriteItemVerticalCard extends StatelessWidget {
                       rated: getRating(),
                       peopleCount: getPeopleCount(),
                     ),
-                    const Text(
-                      "Brand Name",
+                    Text(
+                      "${product.brand}",
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: FontsName.regular,
                         fontSize: 14,
                         color: Colors.grey,
@@ -78,7 +70,7 @@ class FavoriteItemVerticalCard extends StatelessWidget {
                     // style: textTheme.caption?.copyWith(
                     //     color: Colors.grey, letterSpacing: -.3)),
                     Text(
-                      "Product Type",
+                      "${product.category}",
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontFamily: FontsName.bold,
@@ -89,46 +81,46 @@ class FavoriteItemVerticalCard extends StatelessWidget {
                       // style:
                       //     textTheme.subtitle1?.copyWith(letterSpacing: -.5),
                     ),
-                    RichText(
-                      text: const TextSpan(children: [
-                        TextSpan(
-                          text: "Colors: ",
-                          style: TextStyle(
-                            fontFamily: FontsName.regular,
-                            fontSize: 14,
-                            color: Colors.grey,
-                            letterSpacing: -.8,
-                          ),
-                        ),
-                        TextSpan(
-                          text: "Blue\t\t",
-                          style: TextStyle(
-                            fontFamily: FontsName.regular,
-                            fontSize: 14,
-                            color: Colors.black,
-                            letterSpacing: -.8,
-                          ),
-                        ),
-                        TextSpan(
-                          text: "Size: ",
-                          style: TextStyle(
-                            fontFamily: FontsName.regular,
-                            fontSize: 14,
-                            color: Colors.grey,
-                            letterSpacing: -.8,
-                          ),
-                        ),
-                        TextSpan(
-                          text: "L",
-                          style: TextStyle(
-                            fontFamily: FontsName.regular,
-                            fontSize: 14,
-                            color: Colors.black,
-                            letterSpacing: -.8,
-                          ),
-                        ),
-                      ]),
-                    ),
+                    // RichText(
+                    //   text: const TextSpan(children: [
+                    //     TextSpan(
+                    //       text: "Colors: ",
+                    //       style: TextStyle(
+                    //         fontFamily: FontsName.regular,
+                    //         fontSize: 14,
+                    //         color: Colors.grey,
+                    //         letterSpacing: -.8,
+                    //       ),
+                    //     ),
+                    //     TextSpan(
+                    //       text: "Blue\t\t",
+                    //       style: TextStyle(
+                    //         fontFamily: FontsName.regular,
+                    //         fontSize: 14,
+                    //         color: Colors.black,
+                    //         letterSpacing: -.8,
+                    //       ),
+                    //     ),
+                    //     TextSpan(
+                    //       text: "Size: ",
+                    //       style: TextStyle(
+                    //         fontFamily: FontsName.regular,
+                    //         fontSize: 14,
+                    //         color: Colors.grey,
+                    //         letterSpacing: -.8,
+                    //       ),
+                    //     ),
+                    //     TextSpan(
+                    //       text: "L",
+                    //       style: TextStyle(
+                    //         fontFamily: FontsName.regular,
+                    //         fontSize: 14,
+                    //         color: Colors.black,
+                    //         letterSpacing: -.8,
+                    //       ),
+                    //     ),
+                    //   ]),
+                    // ),
 
                     PriceText(
                       context: context,
@@ -140,11 +132,11 @@ class FavoriteItemVerticalCard extends StatelessWidget {
               ),
             ],
           ),
-          Positioned(
-            top: 156,
-            right: -3,
-            child: FavoriteButton(id: 1.toString()),
-          ),
+          // Positioned(
+          //   top: 156,
+          //   right: -3,
+          //   child: FavoriteButton(id: 1.toString()),
+          // ),
           Positioned(
             top: 10,
             left: 10,
@@ -166,11 +158,14 @@ class FavoriteItemVerticalCard extends StatelessWidget {
               ),
             ),
           ),
-          const Positioned(
+          Positioned(
             right: 10,
             top: 10,
             child: InkWell(
-              child: Icon(Icons.close, color: Colors.red),
+              child: const Icon(Icons.close, color: Colors.red),
+              onTap: () => context
+                  .read<AccountProvider>()
+                  .removeFromFavorite(product.id!),
             ),
           ),
         ],

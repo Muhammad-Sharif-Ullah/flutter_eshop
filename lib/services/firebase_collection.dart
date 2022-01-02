@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_eshop/model/auth_response_model.dart';
+import 'package:flutter_eshop/model/beg_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'firebase_storage.dart';
@@ -36,20 +38,46 @@ class FireBaseCollection {
     });
   }
 
-  static addToBeg({required Map<String, dynamic> begMap}) async {
+  static Future<FirebaseResponseModel> addToBeg(
+      {required Map<String, dynamic> begMap}) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
     ///Checking if the beg items is already exists
     ///in the firebase collection then no need to create new one.
-    await _instance
+    return await _instance
         .collection("$users/$uid/$beg")
         .doc(begMap['id'])
         .set(begMap)
-        .then((value) {})
+        .then((value) => FirebaseResponseModel(true, "Success"))
         .onError((FirebaseException error, stackTrace) {
       print.call(error.code);
+      return FirebaseResponseModel(true, error.message.toString());
     }).catchError((error) {
       print.call(error);
+      return FirebaseResponseModel(true, error.message.toString());
+    });
+  }
+
+  static Stream<List<BegModel>> getBegAsStream(String uid) {
+    return _instance.collection('users/$uid/beg').snapshots().map((begs) {
+      return begs.docs.map((beg) => BegModel.fromJson(beg.data())).toList();
+    });
+  }
+
+  static deleteItemFromBeg(String prodId, String uid) async {
+    return await _instance.doc('users/$uid/beg/$prodId').delete();
+  }
+
+  static Stream<List<String>> favoritesIdAsStream(String uid) {
+    return _instance
+        .doc('users/$uid/favorites/favorites_list')
+        .snapshots()
+        .map((ids) {
+      final List<String> data = [];
+      for (var e in ids.data()!['product_id']) {
+        data.add(e);
+      }
+      return data;
     });
   }
 
@@ -57,7 +85,7 @@ class FireBaseCollection {
     String uid = FirebaseAuth.instance.currentUser!.uid;
     await _instance
         .doc("$users/$uid/")
-        .collection('$favorites')
+        .collection(favorites)
         .doc("favorites_list")
         .get()
         .then((doc) async {
@@ -71,7 +99,7 @@ class FireBaseCollection {
               .update({"product_id": previousList});
         }
       } else {
-        print(doc.exists);
+        print.call(doc.exists);
         await _instance
             .collection("$users/$uid/$favorites")
             .doc('favorites_list')
@@ -86,7 +114,7 @@ class FireBaseCollection {
     String uid = FirebaseAuth.instance.currentUser!.uid;
     await _instance
         .doc("$users/$uid/")
-        .collection('$favorites')
+        .collection(favorites)
         .doc("favorites_list")
         .get()
         .then((doc) async {
@@ -112,9 +140,29 @@ class FireBaseCollection {
     print.call("Checking : $prodId");
     await _instance
         .doc("$users/$uid/beg/$prodId")
-        .update({"quantity": value, "price": price}).onError(
-            (FirebaseException error, stackTrace) =>
-                print.call("ERROR: ${error.code}"));
+        .update({"quantity": value, "price": price})
+        .then((value) => print.call("Success"))
+        .onError((error, stackTrace) => print.call("$error"));
+  }
+
+  static Stream<double> priceAsStream(String prodId) {
+    return _instance
+        .collection('products')
+        .doc(prodId)
+        .snapshots()
+        .map((items) {
+      return double.parse(items['old_price']);
+    });
+  }
+
+  static Stream<int> quantityAsStream(String prodId) {
+    return _instance
+        .collection('products')
+        .doc(prodId)
+        .snapshots()
+        .map((items) {
+      return items['quantity'];
+    });
   }
 
   static Future<List<Map<String, dynamic>>> fetchRelatedProduct(
@@ -144,7 +192,9 @@ class FireBaseCollection {
     String prodId = comments['product_Id'];
     int rating = comments['rate'];
     List<File> files = [];
-    for (XFile image in comments['images']) files.add(File(image.path));
+    for (XFile image in comments['images']) {
+      files.add(File(image.path));
+    }
     final List<String> imageUrls =
         await FireBaseStorage.uploadFilesAndGetUrls(files, uid);
     comments['images'] = imageUrls;
@@ -152,7 +202,7 @@ class FireBaseCollection {
     /// Save review in product doc
     return await _instance
         .collection("$products/$prodId/$reviews")
-        .doc('$uid')
+        .doc(uid)
         .set(comments)
         .then(
       (value) async {
@@ -193,7 +243,7 @@ class FireBaseCollection {
               .update({"product_id": previousList})
               .then((value) => true)
               .onError((FirebaseException error, stackTrace) {
-                print("[E-CODE- 103] ${error.code}");
+                print.call("[E-CODE- 103] ${error.code}");
                 return false;
               });
         }
@@ -206,7 +256,7 @@ class FireBaseCollection {
             })
             .then((value) => true)
             .onError((FirebaseException error, stackTrace) {
-              print("[E-CODE- 104] ${error.code}");
+              print.call("[E-CODE- 104] ${error.code}");
               return false;
             });
       }
@@ -221,12 +271,13 @@ class FireBaseCollection {
   ///like a comment of comment
   static likeAComment(String uid, String prodId) async {
     String url = "$products/$prodId/$reviews";
-    await _instance.collection(url).doc('$uid').get().then((value) async {
+    await _instance.collection(url).doc(uid).get().then((value) async {
       List<String> reviewLiked = value.data()!['reviewLiked'].cast<String>();
-      if (reviewLiked.contains(uid))
+      if (reviewLiked.contains(uid)) {
         reviewLiked.remove(uid);
-      else
+      } else {
         reviewLiked.add(uid);
+      }
       await _instance
           .doc("$url/$uid/")
           .update({"reviewLiked": reviewLiked}).then((value) {
@@ -239,23 +290,20 @@ class FireBaseCollection {
   }
 
   static updateRatingInProdDOC(String prodID, String uid, int rate) async {
-    await _instance
-        .collection(products)
-        .doc("$prodID")
-        .get()
-        .then((value) async {
+    await _instance.collection(products).doc(prodID).get().then((value) async {
       Map<String, int> rating = value.get('rating').cast<String, int>();
-      if (rating.containsKey('$uid'))
+      if (rating.containsKey(uid)) {
         rating.update(uid, (value) => rate);
-      else
+      } else {
         rating[uid] = rate;
-      _instance.collection(products).doc("$prodID").update({
+      }
+      _instance.collection(products).doc(prodID).update({
         "rating": rating,
       }).onError((FirebaseException error, stackTrace) {
-        print(error.message);
+        print.call(error.message);
       });
     }).onError((FirebaseException error, stackTrace) {
-      print(error.message);
+      print.call(error.message);
     });
   }
 
@@ -271,10 +319,10 @@ class FireBaseCollection {
         .set(addressMap)
         .then((value) => true)
         .onError((FirebaseException error, stackTrace) {
-      print(error.code);
+      print.call(error.code);
       return false;
     }).catchError((error) {
-      print(error);
+      print.call(error);
       return false;
     });
   }
@@ -287,7 +335,7 @@ class FireBaseCollection {
       String activeID, String toBeAactiveID, bool currentState) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
     if (activeID == toBeAactiveID) activeID = '';
-    print("AC: $activeID, BEA:  $toBeAactiveID");
+    print.call("AC: $activeID, BEA:  $toBeAactiveID");
 
     if (activeID.isNotEmpty) {
       return await _instance

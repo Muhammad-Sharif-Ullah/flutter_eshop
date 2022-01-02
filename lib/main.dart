@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_eshop/provider/account_provider.dart';
 import 'package:flutter_eshop/provider/auth_provider.dart';
 import 'package:flutter_eshop/provider/bottom_navigation_provider.dart';
+import 'package:flutter_eshop/provider/product_details_provider.dart';
 import 'package:flutter_eshop/routes/app_pages.dart';
 import 'package:flutter_eshop/theme/app_theme.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,9 @@ class FlutterEshop extends StatelessWidget {
         ChangeNotifierProvider<AccountProvider>(
             create: (context) => AccountProvider()),
         ChangeNotifierProvider<BottomNavigationProvider>(
-            create: (context) => BottomNavigationProvider())
+            create: (context) => BottomNavigationProvider()),
+        ChangeNotifierProvider<ProductDetailsProvider>(
+            create: (context) => ProductDetailsProvider()),
       ],
       child: MaterialApp(
         initialRoute: AppPages.initalRoutes,

@@ -14,9 +14,9 @@ class RatingWidget extends StatelessWidget {
         style: const TextStyle(fontSize: 14, color: Colors.grey),
         children: [
           TextSpan(
-              text: '${rate * rated}',
+              text: rate * rated,
               style: const TextStyle(color: Color(0xFFFFBA49), fontSize: 16)),
-          TextSpan(text: '${notRated * (5 - rated)}'),
+          TextSpan(text: notRated * (5 - rated)),
           if (peopleCount != 0) TextSpan(text: ' ($peopleCount)'),
         ],
       ),

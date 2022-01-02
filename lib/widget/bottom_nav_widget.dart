@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_eshop/provider/account_provider.dart';
 import 'package:flutter_eshop/provider/bottom_navigation_provider.dart';
 import 'package:flutter_eshop/theme/app_colors.dart';
 import 'package:flutter_eshop/theme/nab_icon_icons.dart';
@@ -27,22 +28,18 @@ class CustomBottomNavigator extends StatelessWidget {
             currentIndex: bnProvider.currentTab,
             backgroundColor:
                 isDarkMode ? AppColors.blackDark : Colors.grey[200],
-                onTap: (index)=> bnProvider.currentTabChange(index),
-            items: const [
-              BottomNavigationBarItem(
+            onTap: (index) => bnProvider.currentTabChange(index),
+            items: [
+              const BottomNavigationBarItem(
                 icon: Icon(NabIcon.home),
                 label: "Home",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.category),
-                label: "Category",
               ),
               BottomNavigationBarItem(
                 icon: BottomIconWidget(
                   currentIndex: 0,
                   pageIndex: 2,
                   icon: NabIcon.shoppingBag,
-                  value: 4,
+                  value: context.watch<AccountProvider>().begs.length,
                 ),
                 label: "Beg",
               ),
@@ -51,11 +48,15 @@ class CustomBottomNavigator extends StatelessWidget {
                   currentIndex: 0,
                   pageIndex: 2,
                   icon: NabIcon.heart,
-                  value: 2,
+                  value: context.watch<AccountProvider>().favoriteIds.length,
                 ),
                 label: "Favorites",
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart),
+                label: "Shop",
+              ),
+              const BottomNavigationBarItem(
                 icon: Icon(NabIcon.profile),
                 label: "Profile",
               ),

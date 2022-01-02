@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_eshop/data/slider_data.dart';
 import 'package:flutter_eshop/model/product_mode.dart';
+import 'package:flutter_eshop/provider/product_details_provider.dart';
+import 'package:flutter_eshop/routes/app_pages.dart';
 import 'package:flutter_eshop/widget/bottom_nav_widget.dart';
 import 'package:flutter_eshop/widget/carousel_widget.dart';
 import 'package:flutter_eshop/widget/home_item_card.dart';
+import 'package:provider/provider.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -103,7 +106,17 @@ class HomeGrideView extends StatelessWidget {
       itemBuilder: (context, int index) {
         return InkWell(
           borderRadius: BorderRadius.circular(10),
-          onTap: () {},
+          onTap: () {
+            context.read<ProductDetailsProvider>().defineProvider(
+                  prod: products[index],
+                  color: products[index].colors!.first,
+                  size: products[index].sizes!.first,
+                );
+            Navigator.pushNamed(
+              context,
+              AppRoutes.productDetails,
+            );
+          },
           child: HomeItemCard(
             isDarkMode: isDarkMode,
             textTheme: textTheme,

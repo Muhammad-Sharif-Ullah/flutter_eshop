@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_eshop/provider/account_provider.dart';
 import 'package:flutter_eshop/theme/app_colors.dart';
 import 'package:flutter_eshop/theme/app_constant.dart';
+import 'package:flutter_eshop/widget/beg_cart.dart';
 import 'package:flutter_eshop/widget/big_splash_button.dart';
 import 'package:flutter_eshop/widget/bottom_nav_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/src/provider.dart';
 
 class BegView extends StatelessWidget {
   const BegView({Key? key}) : super(key: key);
@@ -55,8 +59,9 @@ class BegView extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: AppConstant.kPadding),
-                  child: buildObx(context, textTheme),
+                    horizontal: 8,
+                  ),
+                  child: buildObx(context, textTheme, isDarkMode),
                 ),
               ),
               ...totalListWidget(context, textTheme, width),
@@ -65,21 +70,29 @@ class BegView extends StatelessWidget {
         ));
   }
 
-  Widget buildObx(BuildContext context, TextTheme textTheme) {
+  Widget buildObx(BuildContext context, TextTheme textTheme, bool isDarkMode) {
     // controller.total.value = controller.getTotalPrice();
-    if ("".isEmpty) {
+    if (context.watch<AccountProvider>().begs.isEmpty) {
       return Center(
           child: Text(
         'You have no Item in your beg',
         style: textTheme.caption,
       ));
     }
-    return ListView.builder(
-        itemCount: 2,
+    return Consumer<AccountProvider>(
+      builder: (context, provider, child) => ListView.builder(
+        itemCount: provider.begs.length,
         physics: const BouncingScrollPhysics(),
         itemBuilder: (context, int index) {
-          return Container(color: Colors.red);
-        });
+          return BegCart(
+            isDarkMode: isDarkMode,
+            textTheme: textTheme,
+            index: index,
+            product: context.watch<AccountProvider>().begs[index],
+          );
+        },
+      ),
+    );
   }
 
   List<Widget> totalListWidget(

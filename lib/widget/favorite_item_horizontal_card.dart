@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_eshop/model/product_mode.dart';
+import 'package:flutter_eshop/provider/account_provider.dart';
 import 'package:flutter_eshop/theme/app_colors.dart';
 import 'package:flutter_eshop/theme/fonts_names.dart';
-import 'package:flutter_eshop/theme/nab_icon_icons.dart';
+import 'package:flutter_eshop/widget/cached_network_widget.dart';
 import 'package:flutter_eshop/widget/rating_widget.dart';
+import 'package:provider/src/provider.dart';
 
 class FavoriteItemHozontalCard extends StatelessWidget {
   const FavoriteItemHozontalCard({
     required this.isDarkMode,
     required this.textTheme,
+    required this.product,
     Key? key,
   }) : super(key: key);
 
   final bool isDarkMode;
   final TextTheme textTheme;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -34,17 +39,10 @@ class FavoriteItemHozontalCard extends StatelessWidget {
             children: [
               Expanded(
                 flex: 1,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
-                  ),
-                  child: Image.asset(
-                    "assets/images/banner1.jpg",
-                    width: 200,
-                    height: 130,
-                    fit: BoxFit.cover,
-                  ),
+                child: CachedNetworkWidget(
+                  url: product.images!.first,
+                  height: 130,
+                  width: 200,
                 ),
               ),
               const SizedBox(width: 10),
@@ -59,10 +57,10 @@ class FavoriteItemHozontalCard extends StatelessWidget {
                     //   style: textTheme.bodyText1
                     //       ?.copyWith(color: AppColors.grey, fontSize: 15),
                     // ),
-                    const Text(
-                      "Brand Name",
+                    Text(
+                      "${product.brand}",
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: FontsName.regular,
                         fontSize: 14,
                         color: Colors.grey,
@@ -70,7 +68,7 @@ class FavoriteItemHozontalCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Product Type",
+                      "${product.category}",
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontFamily: FontsName.bold,
@@ -81,46 +79,46 @@ class FavoriteItemHozontalCard extends StatelessWidget {
                       // style:
                       //     textTheme.subtitle1?.copyWith(letterSpacing: -.5),
                     ),
-                    RichText(
-                      text: const TextSpan(children: [
-                        TextSpan(
-                          text: "Colors: ",
-                          style: TextStyle(
-                            fontFamily: FontsName.regular,
-                            fontSize: 14,
-                            color: Colors.grey,
-                            letterSpacing: -.8,
-                          ),
-                        ),
-                        TextSpan(
-                          text: "Blue\t\t",
-                          style: TextStyle(
-                            fontFamily: FontsName.regular,
-                            fontSize: 14,
-                            color: Colors.black,
-                            letterSpacing: -.8,
-                          ),
-                        ),
-                        TextSpan(
-                          text: "Size: ",
-                          style: TextStyle(
-                            fontFamily: FontsName.regular,
-                            fontSize: 14,
-                            color: Colors.grey,
-                            letterSpacing: -.8,
-                          ),
-                        ),
-                        TextSpan(
-                          text: "L",
-                          style: TextStyle(
-                            fontFamily: FontsName.regular,
-                            fontSize: 14,
-                            color: Colors.black,
-                            letterSpacing: -.8,
-                          ),
-                        ),
-                      ]),
-                    ),
+                    // RichText(
+                    //   text: const TextSpan(children: [
+                    //     TextSpan(
+                    //       text: "Colors: ",
+                    //       style: TextStyle(
+                    //         fontFamily: FontsName.regular,
+                    //         fontSize: 14,
+                    //         color: Colors.grey,
+                    //         letterSpacing: -.8,
+                    //       ),
+                    //     ),
+                    //     TextSpan(
+                    //       text: "Blue\t\t",
+                    //       style: TextStyle(
+                    //         fontFamily: FontsName.regular,
+                    //         fontSize: 14,
+                    //         color: Colors.black,
+                    //         letterSpacing: -.8,
+                    //       ),
+                    //     ),
+                    //     TextSpan(
+                    //       text: "Size: ",
+                    //       style: TextStyle(
+                    //         fontFamily: FontsName.regular,
+                    //         fontSize: 14,
+                    //         color: Colors.grey,
+                    //         letterSpacing: -.8,
+                    //       ),
+                    //     ),
+                    //     TextSpan(
+                    //       text: "L",
+                    //       style: TextStyle(
+                    //         fontFamily: FontsName.regular,
+                    //         fontSize: 14,
+                    //         color: Colors.black,
+                    //         letterSpacing: -.8,
+                    //       ),
+                    //     ),
+                    //   ]),
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -143,25 +141,15 @@ class FavoriteItemHozontalCard extends StatelessWidget {
             ],
           ),
         ),
-        const Positioned(
+        Positioned(
           right: 10,
           top: 10,
           child: InkWell(
-            child: Icon(Icons.close, color: Colors.red),
+            child: const Icon(Icons.close, color: Colors.red),
+            onTap: () => context.read<AccountProvider>().removeFromFavorite(product.id!),
           ),
         ),
-        Positioned(
-          right: 10,
-          bottom: 10,
-          child: InkWell(
-            child: FloatingActionButton(
-              onPressed: () {},
-              child: const Icon(NabIcon.bagNofill, color: Colors.white),
-              mini: true,
-              backgroundColor: AppColors.primary,
-            ),
-          ),
-        ),
+        
       ],
     );
   }

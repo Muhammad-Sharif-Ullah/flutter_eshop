@@ -24,8 +24,8 @@ class CachedNetworkWidget extends StatelessWidget {
         imageUrl: url,
         fit: BoxFit.cover,
         filterQuality: FilterQuality.high,
-        placeholder: (context, url) => CupertinoActivityIndicator(),
-        errorWidget: (context, url, error) => Icon(Icons.error),
+        placeholder: (context, url) => const CupertinoActivityIndicator(),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
       ),
     );
   }
